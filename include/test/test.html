@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="index.html" method="GET" onsubmit="return verifier()">
+        <label for="tel">Telephone</label><br/><input type="text" id="tel" maxlength="10" />
+        <p id="erreurtel"></p>
+
+        <label for="email">Email</label><br/><input type="text" id="email" />
+        <p id="erreurmail"></p>
+
+        <label for="start">Date start : </label><br/><input type="date" id="start" name="strip-start" value="2018-07-22" min="2018-01-01" max="2018-13-31" />
+        <br/><br/>
+        <input type="submit" name="bouton" id="bouton" />
+        <p id="verifier"></p>
+
+    </form>
+
+    <script type="text/javascript">
+        //recuperation d'une refernece vers le bouton
+        var bouton = document.getElementById("bouton");
+        // la fonction verifier est appelé lorsqu'on click sur le bouton
+        var tel = document.getElementById("tel");
+        var email = document.getElementById("email");
+
+        // les eurreurtel et erreurmail sont appelé lorsqu'on sort des zones de text tel et mail
+        bouton.addEventListener("click", verifier, false);
+        tel.addEventListener("blur", erreurtel, false);
+        email.addEventListener("blur", erreurmail, false);
+
+        function erreurtel() {
+            //pour verifier que la zone de texte n'est pas vide et que le numero soit a la forme 0xxxxxxxxx
+            var tel = document.getElementById("tel");
+            var erreurtel = document.getElementById("erreurtel");
+            var pattern = "0[0-9]{9}$"
+
+            if (tel.value == "") {
+                erreurtel.innerHTML = "le telephone ne peut pas etre vide"
+                erreurtel.style.color = "red"
+                tel.focus();
+                return false;
+            } else if (!tel.value.match(pattern)) {
+                erreurtel.innerHTML = "le champ doit commencer par un 0 et doit contenir 10 chiffres"
+                erreurtel.style.color = "red"
+                tel.focus();
+                return false;
+            } else {
+                erreurtel.innerHTML = ""
+                return true;
+            }
+        }
+
+
+        function erreurmail() {
+            //pour verifier que la zone de texte n'est pas vide et que le numero soit a la forme 0xxxxxxxxx
+            var email = document.getElementById("email");
+            var erreurmail = document.getElementById("erreurmail");
+            var pattern = "[a-z0-9._%+-]+@[a-z]+\.[a-z]{2,3}$"
+
+            if (email.value == "") {
+                erreurmail.innerHTML = "l'email ne peut pas etre vide"
+                erreurmail.style.color = "red"
+                email.focus();
+                return false;
+            } else if (!email.value.match(pattern)) {
+                erreurmail.innerHTML = "l'email doit etre de type xxx@xxx.xxx"
+                erreurmail.style.color = "red"
+                email.focus();
+                return false;
+            } else {
+                erreurmail.innerHTML = ""
+                return true;
+            }
+        }
+
+        function verifier() {
+            var verifier = erreurtel() && erreurmail();
+            return verifier;
+        }
+    </script>
+
+
+</body>
+
+</html>
